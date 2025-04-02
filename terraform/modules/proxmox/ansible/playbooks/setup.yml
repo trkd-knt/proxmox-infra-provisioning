@@ -1,0 +1,7 @@
+---
+- name: Proxmoxの初期セットアップ
+  hosts: proxmox
+  become: true
+
+  roles:
+    - proxmox

@@ -1,0 +1,9 @@
+- name: 機器情報を制御端末に保存
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: 制御端末にJSONで保存
+      copy:
+        content: "{{ ansible_facts | to_nice_json }}"
+        dest: "./facts/facts_{{ inventory_hostname }}.json"
+      delegate_to: localhost
