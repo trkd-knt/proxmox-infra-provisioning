@@ -23,17 +23,43 @@ resource "ansible_host" "nodes" {
   }
 }
 
+# resource "ansible_playbook" "gather_facts" {
+#   for_each = var.targets
+# 
+#   name     = each.value.ip
+#   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
+# 
+#   # extra_vars = {
+#   #   inventory_file = "${path.module}/ansible/inventory.yml"
+#   # }
+# 
+#   depends_on = [
+#     ansible_host.nodes,
+#   ]
+# }
+
 resource "ansible_playbook" "gather_facts" {
   for_each = var.targets
 
-  name     = each.value.ip
-  playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
+  ansible_playbook_binary = "ansible-playbook"
+  playbook                = "${path.module}/ansible/playbooks/gather_facts.yml"
 
-  //extra_vars = {
-  //  inventory_file = "${path.module}/ansible/inventory.yml"
-  //}
+  # inventory configuration
+  name = each.value.ip
 
-  depends_on = [
-    ansible_host.nodes,
-  ]
+  # # ansible vault
+  # vault_password_file = "vault-password-file.txt"
+  # vault_files = [
+  #   "vault-file.yml",
+  # ]
+
+  # connection configuration and other vars
+  #extra_vars = {
+  #  ansible_hostname   = docker_container.alpine_1.name
+  #  ansible_connection = "docker"
+#
+  #  test_filename = "test_e2e_vault.txt"
+  #}
+
+  depends_on = [ansible_host.nodes] # make sure this resource waits for e2e_vars to finish
 }
