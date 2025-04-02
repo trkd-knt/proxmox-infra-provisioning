@@ -12,7 +12,7 @@ resource "ansible_group" "proxmox" {
 resource "ansible_host" "nodes" {
   for_each = var.targets
 
-  name   = each.key
+  name   = each.value.ip
   groups = ["targets"]
 
   variables = {
@@ -22,9 +22,11 @@ resource "ansible_host" "nodes" {
     ansible_python_interpreter   = "/usr/bin/python3"
   }
 }
-resource "ansible_playbook" "gather_facts" {
 
-  name     = "ansible_playbook_gather_facts"
+resource "ansible_playbook" "gather_facts" {
+  for_each = var.targets
+
+  name     = each.value.ip
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
 
   extra_vars = {
