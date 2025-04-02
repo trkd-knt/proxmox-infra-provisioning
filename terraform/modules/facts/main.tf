@@ -10,7 +10,7 @@ resource "ansible_group" "proxmox" {
 }
 
 resource "ansible_host" "pve_node1" {
-  name   = "pve01"
+  name   = "192.168.1.13"
   groups = ["targets"]
 
   variables = {
