@@ -4,7 +4,7 @@
 #     targets = local.hosts.proxmox   
 # }
 # 
-module "facts" {
-    source = "../modules/facts" 
+module "gather_facts" {
+    source = "../modules/gather_facts" 
     targets = local.hosts.proxmox
 }
