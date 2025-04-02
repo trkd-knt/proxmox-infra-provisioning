@@ -45,7 +45,7 @@ resource "ansible_playbook" "gather_facts" {
   playbook                = "${path.module}/ansible/playbooks/gather_facts.yml"
 
   name = "run_${each.key}"
-  limit = each.value.ip
+  limit = [each.value.ip]
 
   depends_on = [ansible_host.nodes] # make sure this resource waits for e2e_vars to finish
 }
