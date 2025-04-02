@@ -22,12 +22,8 @@ resource "ansible_host" "pve_node1" {
 }
 
 resource "ansible_playbook" "gather_facts" {
-  name     = "playbook_gather_facts"
+  name     = ansible_host.pve_node1.name
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
-
-  extra_vars = {
-    hostname = ""
-  }
 
   depends_on = [
     ansible_host.pve_node1,
