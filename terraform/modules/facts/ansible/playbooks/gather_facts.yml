@@ -5,5 +5,5 @@
     - name: 制御端末にJSONで保存
       copy:
         content: "{{ ansible_facts | to_nice_json }}"
-        dest: "./facts/facts_{{ inventory_hostname }}.json"
+        dest: "../../outputs/facts_{{ inventory_hostname }}.json"
       delegate_to: localhost
