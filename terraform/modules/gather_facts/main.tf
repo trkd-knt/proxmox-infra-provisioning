@@ -12,11 +12,11 @@ resource "ansible_host" "nodes" {
   }
 }
 
-resource "ansible_playbook" "proxmox_hosts_setup" {
+resource "ansible_playbook" "gather_facts" {
   for_each = var.targets
 
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/../ansible/playbooks/proxmox_hosts_setup.yml"
+  playbook                = "${path.module}/../ansible/playbooks/gather_facts.yml"
 
   name = each.value.ip
 
