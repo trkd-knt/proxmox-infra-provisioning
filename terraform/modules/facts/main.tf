@@ -9,12 +9,14 @@ resource "ansible_group" "proxmox" {
   }
 }
 
-resource "ansible_host" "pve_node1" {
-  name   = "192.168.1.13"
+resource "ansible_host" "nodes" {
+  for_each = var.targets
+
+  name   = each.key
   groups = ["targets"]
 
   variables = {
-    ansible_host                  = "192.168.1.13"
+    ansible_host                  = each.value.ip
     ansible_user                  = "root"
     ansible_ssh_private_key_file = "./id_rsa"
     ansible_python_interpreter   = "/usr/bin/python3"
@@ -22,10 +24,12 @@ resource "ansible_host" "pve_node1" {
 }
 
 resource "ansible_playbook" "gather_facts" {
-  name     = ansible_host.pve_node1.name
+  for_each = var.targets
+
+  name     = each.value.ip
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
 
   depends_on = [
-    ansible_host.pve_node1,
+    ansible_host.nodes,
   ]
 }
