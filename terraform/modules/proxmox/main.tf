@@ -16,7 +16,7 @@ resource "ansible_playbook" "proxmox_hosts_setup" {
   for_each = var.targets
 
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/../ansible/playbooks/proxmox_hosts_setup.yml"
+  playbook                = "${path.module}/../ansible/proxmox_hosts_setup.yml"
 
   name = each.value.ip
 

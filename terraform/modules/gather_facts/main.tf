@@ -16,7 +16,7 @@ resource "ansible_playbook" "gather_facts" {
   for_each = var.targets
 
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/../ansible/playbooks/gather_facts.yml"
+  playbook                = "${path.module}/../ansible/gather_facts.yml"
 
   name = each.value.ip
 
