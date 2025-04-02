@@ -29,9 +29,9 @@ resource "ansible_playbook" "gather_facts" {
   name     = each.value.ip
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
 
-  extra_vars = {
-    inventory_file = "${path.module}/ansible/inventory.yml"
-  }
+  //extra_vars = {
+  //  inventory_file = "${path.module}/ansible/inventory.yml"
+  //}
 
   depends_on = [
     ansible_host.nodes,
