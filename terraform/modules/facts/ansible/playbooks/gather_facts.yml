@@ -1,5 +1,5 @@
 - name: 機器情報を制御端末に保存
-  hosts: gather_facts
+  hosts: targets
   gather_facts: true
   tasks:
     - name: 制御端末にJSONで保存

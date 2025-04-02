@@ -1,5 +1,5 @@
 resource "ansible_group" "proxmox" {
-  name = "gather_facts"
+  name = "targets"
 
   variables = {
     ansible_become        = "yes"
@@ -11,7 +11,7 @@ resource "ansible_group" "proxmox" {
 
 resource "ansible_host" "pve_node1" {
   name   = "pve01"
-  groups = ["gather_facts"]
+  groups = ["targets"]
 
   variables = {
     ansible_host                  = "192.168.1.13"
@@ -21,11 +21,11 @@ resource "ansible_host" "pve_node1" {
   }
 }
 
-# resource "ansible_playbook" "gather_facts" {
-#   name     = "gather_facts"
-#   playbook  = "${path.module}/../ansible/playbooks/gather_facts.yml"
-# 
-#   depends_on = [
-#     ansible_host.pve_node1,
-#   ]
-# }
+resource "ansible_playbook" "gather_facts" {
+  name     = "targets"
+  playbook  = "${path.module}/../ansible/playbooks/gather_facts.yml"
+
+  depends_on = [
+    ansible_host.pve_node1,
+  ]
+}
