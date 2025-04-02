@@ -7,4 +7,6 @@ module "proxmox" {
 module "gather_facts" {
     source = "../modules/gather_facts" 
     targets = local.hosts.proxmox
+
+    depends_on = [ module.proxmox ]
 }

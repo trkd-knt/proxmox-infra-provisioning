@@ -1,6 +1,7 @@
 - name: OVS用ネットワーク設定を作成
   copy:
     src: ovs_interfaces.j2
-    dest: /etc/network/interfaces.d/ovs.conf
+    dest: /etc/network/interfaces
     mode: '0644'
+    backup: yes
   notify: restart networking
