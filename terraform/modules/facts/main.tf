@@ -22,12 +22,14 @@ resource "ansible_host" "nodes" {
     ansible_python_interpreter   = "/usr/bin/python3"
   }
 }
-
 resource "ansible_playbook" "gather_facts" {
-  for_each = var.targets
 
-  name     = each.value.ip
+  name     = "ansible_playbook_gather_facts"
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
+
+  extra_vars = {
+    inventory_file = "${module.path}/ansible/inventory.yml"
+  }
 
   depends_on = [
     ansible_host.nodes,
