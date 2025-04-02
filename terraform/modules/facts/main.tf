@@ -34,8 +34,8 @@ resource "ansible_host" "pve_node2" {
 }
 
 resource "ansible_playbook" "gather_facts" {
+  name     = "gather_facts"
   playbook  = "${path.module}/../ansible/playbooks/gather_facts.yml"
-  inventory = "generated_inventory.yaml"
 
   depends_on = [
     ansible_host.pve_node1,

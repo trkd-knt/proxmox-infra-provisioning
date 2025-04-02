@@ -34,8 +34,8 @@ resource "ansible_host" "pve_node2" {
 }
 
 resource "ansible_playbook" "proxmox_setup" {
+  name    = "proxmox_setup"
   playbook  = "${path.module}/../ansible/playbooks/playbooks/proxmox_setup.yml"
-  inventory = "generated_inventory.yaml" # プロバイダが生成
 
   depends_on = [ansible_host.pve_node1, ansible_host.pve_node2]
 }
