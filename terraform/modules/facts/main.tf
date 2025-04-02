@@ -28,7 +28,7 @@ resource "ansible_playbook" "gather_facts" {
   playbook  = "${path.module}/ansible/playbooks/gather_facts.yml"
 
   extra_vars = {
-    inventory_file = "${module.path}/ansible/inventory.yml"
+    inventory_file = "${path.module}/ansible/inventory.yml"
   }
 
   depends_on = [
