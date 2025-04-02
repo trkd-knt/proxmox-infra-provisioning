@@ -37,5 +37,9 @@ resource "ansible_playbook" "proxmox_setup" {
   name    = "proxmox_setup"
   playbook  = "${path.module}/../ansible/playbooks/playbooks/proxmox_setup.yml"
 
+  extra_vars = {
+    hostname = ""
+  }
+
   depends_on = [ansible_host.pve_node1, ansible_host.pve_node2]
 }
