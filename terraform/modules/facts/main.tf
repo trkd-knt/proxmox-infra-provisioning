@@ -44,22 +44,8 @@ resource "ansible_playbook" "gather_facts" {
   ansible_playbook_binary = "ansible-playbook"
   playbook                = "${path.module}/ansible/playbooks/gather_facts.yml"
 
-  # inventory configuration
-  name = each.value.ip
-
-  # # ansible vault
-  # vault_password_file = "vault-password-file.txt"
-  # vault_files = [
-  #   "vault-file.yml",
-  # ]
-
-  # connection configuration and other vars
-  #extra_vars = {
-  #  ansible_hostname   = docker_container.alpine_1.name
-  #  ansible_connection = "docker"
-#
-  #  test_filename = "test_e2e_vault.txt"
-  #}
+  name = "run_${each.key}"
+  limit = each.value.ip
 
   depends_on = [ansible_host.nodes] # make sure this resource waits for e2e_vars to finish
 }
