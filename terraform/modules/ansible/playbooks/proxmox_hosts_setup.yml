@@ -1,7 +1,9 @@
 ---
-- name: Proxmoxの初期セットアップ
-  hosts: proxmox
+- name: Proxmox Setup
+  hosts: all
   become: true
 
   roles:
-    - proxmox
+    - setup
+    # - networking
+  
