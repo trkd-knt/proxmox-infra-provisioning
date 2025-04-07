@@ -28,7 +28,7 @@ resource "ansible_playbook" "setup_all_host" {
 
   extra_vars = {
     uplink_interface = each.value.eni.service
-    ovs_ip_address = each.value.manageip
+    ovs_ip_address = each.value.ip
     ovs_gateway =  each.value.gatewayip
     # ntp_servers = each.value.ntp_servers
   }
