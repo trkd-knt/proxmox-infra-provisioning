@@ -1,0 +1,9 @@
+---
+- name: Setup Proxmox Cluster
+  hosts: all
+  become: true
+
+  roles:
+    - create_user_token
+
+  

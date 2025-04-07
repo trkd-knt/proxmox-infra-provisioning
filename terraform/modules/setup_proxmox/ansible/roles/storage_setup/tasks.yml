@@ -1,0 +1,19 @@
+- name: Create Ceph cluster (on master)
+  command: "pveceph init --network {{ ceph_network }}"
+  when: role == "master"
+  register: ceph_init
+  failed_when: false
+  changed_when: ceph_init.rc == 0
+
+- name: Add monitor (on all nodes)
+  command: "pveceph mon create"
+  register: ceph_mon
+  failed_when: false
+  changed_when: ceph_mon.rc == 0
+
+- name: Create OSDs on devices
+  command: "pveceph osd create {{ item }}"
+  loop: "{{ ceph_devices }}"
+  register: ceph_osds
+  failed_when: false
+  changed_when: ceph_osds.rc == 0

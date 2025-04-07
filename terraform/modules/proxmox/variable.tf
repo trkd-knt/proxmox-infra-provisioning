@@ -1,4 +1,4 @@
-variable "targets" {
-  description = "List of targets to gather facts from"
-  type        = map(object({ip = string}))
+variable "target" {
+  description = "target to gather facts from"
+  type        = object({ip = string})
 }

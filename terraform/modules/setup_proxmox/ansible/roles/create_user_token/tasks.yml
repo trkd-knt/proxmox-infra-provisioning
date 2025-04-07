@@ -1,0 +1,31 @@
+- name: Ensure user exists
+  command: "pveum user add {{ proxmox_user }}"
+  register: user_add_result
+  failed_when: false
+  changed_when: false
+
+- name: Create API token with JSON output
+  shell: "pveum user token add {{ proxmox_user }} {{ token_id }} --output-format json"
+  register: token_create
+  changed_when: "'value' in token_create.stdout"
+
+- name: Parse token secret from JSON
+  set_fact:
+    token_json: "{{ token_create.stdout | from_json }}"
+    token_data: "{{ token_json.value }}"
+
+- name: Write token to file (JSON)
+  copy:
+    content: |
+      {
+        "token_id": "{{ proxmox_user }}!{{ token_id }}",
+        "secret": "{{ token_data }}"
+      }
+    dest: "{{ output_path }}"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Grant PVEAdmin role to token
+  command: "pveum aclmod / -tokenid {{ proxmox_user }}!{{ token_id }} -role PVEAdmin"
+  

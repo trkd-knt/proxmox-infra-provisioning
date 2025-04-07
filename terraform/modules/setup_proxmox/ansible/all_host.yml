@@ -1,0 +1,16 @@
+---
+- name: Proxmox Host Setup
+  hosts: all
+  become: true
+
+  vars:
+    uplink_interface: "{{ uplink_interface }}"
+    ovs_ip_address: "{{ ovs_ip_address }}"
+    ovs_gateway: "{{ ovs_gateway }}"
+    ntp_servers: "{{ ntp_servers }}"
+
+  roles:
+    - install_pkg
+    - networking
+    - time_sync
+  

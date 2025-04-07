@@ -1,24 +1,22 @@
-resource "ansible_host" "nodes" {
-  for_each = var.targets
+resource "ansible_host" "node" {
 
-  name   = each.value.ip
+  name   = var.target.ip
   groups = []
 
   variables = {
-    ansible_host                  = each.value.ip
+    ansible_host                  = var.target.ip
     ansible_user                  = "root"
     ansible_ssh_private_key_file = "./id_rsa"
     ansible_python_interpreter   = "/usr/bin/python3"
   }
 }
 
-resource "ansible_playbook" "proxmox_hosts_setup" {
-  for_each = var.targets
-
+resource "ansible_playbook" "setup_pve" {
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/../ansible/proxmox_hosts_setup.yml"
+  playbook                = "${path.module}/ansible/setup_pve.yml"
 
-  name = each.value.ip
+  name = var.target.ip
+  replayable = false
 
   depends_on = [ansible_host.nodes]
 }

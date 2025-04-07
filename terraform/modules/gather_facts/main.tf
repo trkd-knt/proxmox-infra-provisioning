@@ -19,6 +19,8 @@ resource "ansible_playbook" "gather_facts" {
   playbook                = "${path.module}/../ansible/gather_facts.yml"
 
   name = each.value.ip
+  replayable = false
+
 
   depends_on = [ansible_host.nodes]
 }

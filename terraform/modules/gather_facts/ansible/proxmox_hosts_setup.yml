@@ -1,0 +1,9 @@
+---
+- name: Proxmox Setup
+  hosts: all
+  become: true
+
+  roles:
+    - setup
+    - networking
+  

@@ -1,0 +1,20 @@
+---
+- name: Check if node already in cluster
+  command: pvecm status
+  register: cluster_status
+  changed_when: false
+  failed_when: false
+
+- name: クラスタ初期化（マスター）
+  command: "pvecm create {{ cluster_name }}"
+  when: role == master and "'Cluster information' not in cluster_status.stdout"
+  register: create_result
+  failed_when: false
+  changed_when: create_result.rc == 0
+
+- name: 他ノードをクラスタに参加
+  command: "pvecm add {{ master_ip }} -force"
+  when: role != master and "'Cluster information' not in cluster_status.stdout"
+  register: join_result
+  failed_when: false
+  changed_when: join_result.rc == 0

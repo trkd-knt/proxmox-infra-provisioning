@@ -1,0 +1,14 @@
+---
+- name: Ensure systemd-timesyncd is installed
+  apt:
+    name: systemd-timesyncd
+    state: present
+
+- name: Configure systemd-timesyncd with Japanese NTP
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^NTP='
+    line: "NTP={{ ntp_servers | join(' ') }}"
+    state: present
+    backup: yes
+  notify: Restart timesyncd

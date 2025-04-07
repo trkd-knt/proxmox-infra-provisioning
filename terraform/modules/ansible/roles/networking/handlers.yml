@@ -1,4 +1,0 @@
----
-- name: restart networking
-  command: ifreload -a
-  become: true
