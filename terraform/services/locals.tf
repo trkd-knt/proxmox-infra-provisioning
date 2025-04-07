@@ -36,12 +36,13 @@ locals {
 
     hosts = {
         pve01 = {
+            ip = "192.168.1.14/24"
+            gatewayip = "192.168.1.1"
+
             role = "master"
             eni = {
                service = "eth0"
             }
-            manageip = "192.168.1.14/24"
-            gatewayip = "192.168.1.1"
             ntp_servers = [
                 "0.pool.ntp.org",
                 "1.pool.ntp.org",
