@@ -21,7 +21,7 @@ resource "ansible_playbook" "setup_all_host" {
   for_each = var.hosts
 
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/ansible/setup_all_host.yml"
+  playbook                = "${path.module}/ansible/all_host.yml"
 
   name = each.value.ip
   replayable = false
