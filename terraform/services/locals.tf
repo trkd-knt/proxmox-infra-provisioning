@@ -40,8 +40,8 @@ locals {
             eni = {
                service = "eth0"
             }
-            manageip = "192.168.1.13/24"
-            gatewayip = "192.168.1.100"
+            manageip = "192.168.1.14/24"
+            gatewayip = "192.168.1.1"
             ntp_servers = [
                 "0.pool.ntp.org",
                 "1.pool.ntp.org",

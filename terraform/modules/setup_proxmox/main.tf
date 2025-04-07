@@ -26,7 +26,7 @@ resource "ansible_playbook" "setup_all_host" {
   name = each.value.ip
   replayable = false
 
-  extra_vars {
+  variables = {
     uplink_interface = each.value.eni.service
     ovs_ip_address = each.value.manageip
     ovs_gateway =  each.value.gatewayip
