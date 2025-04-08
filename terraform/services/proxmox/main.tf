@@ -1,13 +1,13 @@
 
 module "setup_proxmox" {
-    source = "../modules/setup_proxmox"
+    source = "../../modules/setup_proxmox"
     hosts = local.hosts
     proxmox_cfg = local.proxmox
     output_path = abspath("../outputs")
 }
 
 module "instances" {
-    source = "../modules/vm_instances"
+    source = "../../modules/vm_instances"
     api_address = local.hosts.pve01.ip
 
     depends_on = [ module.proxmox ]
