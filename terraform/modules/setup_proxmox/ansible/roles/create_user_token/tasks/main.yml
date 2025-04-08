@@ -33,7 +33,13 @@
     group: root
     mode: '0600'
 
+- name: Grant PVEAdmin role to token
+  command: "pveum group add admin -comment 'Admin group'"
 
 - name: Grant PVEAdmin role to token
-  command: "pveum aclmod / -tokenid '{{ proxmox_user }}!{{ token_id }}' -role PVEAdmin"
+  command: "pveum acl modify / -group admin -role PVEAdmin"
+
+
+- name: Grant PVEAdmin role to token
+  command: "pvrum user modify {{ proxmox_user }} -group admin"
   
