@@ -71,20 +71,26 @@ resource "ansible_playbook" "setup_pve_master" {
 # 
 #   depends_on = [ansible_playbook.setup_pve_master]
 # }
-# 
-# resource "ansible_playbook" "setup_pve_cluster" {
-#   for_each = { for k, v in var.hosts : k => v if v.role == "master" } 
-# 
-#   ansible_playbook_binary = "ansible-playbook"
-#   playbook                = "${path.module}/ansible/setup_pve_cluster.yml"
-# 
-#   name = each.value.ip
-#   replayable = false
-# 
-#   variables = {
-#     master_ip =  [for k, v in var.targets : v.ip if v.role == "master"][0]
-#   }
-# 
-#   depends_on = [ansible_playbook.setup_pve_slave]
-# }
+
+resource "ansible_playbook" "setup_pve_cluster" {
+  for_each = { for k, v in var.hosts : k => v if v.role == "master" } 
+
+  ansible_playbook_binary = "ansible-playbook"
+  playbook                = "${path.module}/ansible/pve_cluster.yml"
+
+  name = each.value.ip
+  replayable = false
+
+  extra_vars = {
+    proxmox_user = var.proxmox_cfg.user.name
+    token_id = var.proxmox_cfg.user.token_id
+    output_path = "${path.module}/token.json"
+  }
+
+  variables = {
+    master_ip =  [for k, v in var.targets : v.ip if v.role == "master"][0]
+  }
+
+  depends_on = [ansible_playbook.setup_pve_slave]
+}
 

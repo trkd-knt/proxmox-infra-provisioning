@@ -1,6 +1,10 @@
 locals {
     proxmox = {
         cluster_name = "pve-cluster"
+        user = {
+            name = "root@pam"
+            token_id = "terraform"
+        }
         networks = {
             segments = {
                 manage  = "192.168.1.0/24"
@@ -24,10 +28,6 @@ locals {
                     netmask = "255.255.255.0"
                 }
             }
-        }
-        user = {
-            name = "root@pam"
-            token_id = "terraform"
         }
         ntp_servers = [
             "0.pool.ntp.org",

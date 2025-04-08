@@ -1,3 +1,4 @@
+--- 
 - name: Ensure user exists
   command: "pveum user add {{ proxmox_user }}"
   register: user_add_result
@@ -8,6 +9,7 @@
   shell: "pveum user token add {{ proxmox_user }} {{ token_id }} --output-format json"
   register: token_create
   changed_when: "'value' in token_create.stdout"
+  failed_when: false
 
 - name: Parse token secret from JSON
   set_fact:
