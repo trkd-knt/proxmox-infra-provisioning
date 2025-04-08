@@ -1,6 +1,6 @@
 ---
 - name: ベースネットワーク設定（/etc/network/interfaces）
-  copy:
+  template:
     src: templates/interfaces.j2
     dest: /etc/network/interfaces
     mode: '0644'
