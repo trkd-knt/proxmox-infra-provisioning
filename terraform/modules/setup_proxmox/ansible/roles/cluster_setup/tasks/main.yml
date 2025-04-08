@@ -7,7 +7,7 @@
 
 - name: クラスタ初期化（マスター）
   command: "pvecm create {{ cluster_name }}"
-  when: role == master and "'Cluster information' not in cluster_status.stdout"
+  when: role == "master" and "'Cluster information' not in cluster_status.stdout"
   register: create_result
   failed_when: false
   changed_when: create_result.rc == 0
