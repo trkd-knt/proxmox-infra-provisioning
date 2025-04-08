@@ -29,8 +29,8 @@ resource "ansible_playbook" "setup_all_host" {
 
   extra_vars = {
     uplink_interface = each.value.network.uplink_interface
-    mgmt_address = each.value.network.mgmt.manageip
-    mgmt_gateway = each.value.network.mgmt.gatewayip
+    mgmt_address = each.value.network.mgmt.address
+    mgmt_gateway = each.value.network.mgmt.gateway
     vlan10_address = each.value.network.vlan10.address
     vlan10_gateway = each.value.network.vlan10.gateway
     vlan20_address = each.value.network.vlan20.address
