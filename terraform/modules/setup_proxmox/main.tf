@@ -28,15 +28,15 @@ resource "ansible_playbook" "setup_all_host" {
   replayable = false
 
   extra_vars = {
-    uplink_interface = each.value.uplink_interface
-    mgmt_address = each.value.manageip
-    mgmt_gateway = each.value.gatewayip
-    vlan10_address = each.value.vlan10.address
-    vlan10_gateway = each.value.vlan10.gateway
-    vlan20_address = each.value.vlan20.address
-    vlan20_gateway = each.value.vlan20.gateway
-    vlan30_address = each.value.vlan30.address
-    vlan30_gateway = each.value.vlan30.gateway
+    uplink_interface = each.value.network.uplink_interface
+    mgmt_address = each.value.network.mgmt.manageip
+    mgmt_gateway = each.value.network.mgmt.gatewayip
+    vlan10_address = each.value.network.vlan10.address
+    vlan10_gateway = each.value.network.vlan10.gateway
+    vlan20_address = each.value.network.vlan20.address
+    vlan20_gateway = each.value.network.vlan20.gateway
+    vlan30_address = each.value.network.vlan30.address
+    vlan30_gateway = each.value.network.vlan30.gateway
     ntp_servers = join(" ", each.value.ntp_servers)
   }
 
