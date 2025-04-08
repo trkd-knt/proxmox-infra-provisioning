@@ -84,7 +84,7 @@ resource "ansible_playbook" "setup_pve_cluster" {
   extra_vars = {
     proxmox_user = var.proxmox_cfg.user.name
     token_id = var.proxmox_cfg.user.token_id
-    output_path = "${path.module}/../outputs/proxmox_cluster_token.json"
+    output_path = "../../outputs/proxmox_cluster_token.json"
   }
 
   # depends_on = [ansible_playbook.setup_pve_slave]
