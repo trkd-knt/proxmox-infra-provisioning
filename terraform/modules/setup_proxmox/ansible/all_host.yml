@@ -2,17 +2,15 @@
 - name: Proxmox Host Setup
   hosts: all
   become: true
-
-  # define in terraform variables
-  # vars:
-  #   uplink_interface: "{{ uplink_interface }}"
-  #   ovs_ip_address: "{{ ovs_ip_address }}"
-  #   ovs_gateway: "{{ ovs_gateway }}"
-  #   ntp_servers:
-  #     - ntp.nict.jp
-  #     - ntp.jst.mfeed.ad.jp
-  # roles:
-  #   - install_pkg
-  #   - networking
-  #   - time_sync
+  vars:
+    uplink_interface: {{ uplink_interface }}
+    ovs_ip_address: {{ ovs_ip_address }}
+    ovs_gateway: {{ ovs_gateway }}
+    ntp_servers:
+      - ntp.nict.jp
+      - ntp.jst.mfeed.ad.jp
+  roles:
+    - install_pkg
+    - networking
+    - time_sync
   
