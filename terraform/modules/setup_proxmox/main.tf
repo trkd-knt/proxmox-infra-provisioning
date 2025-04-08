@@ -87,10 +87,6 @@ resource "ansible_playbook" "setup_pve_cluster" {
     output_path = "${path.module}/token.json"
   }
 
-  variables = {
-    master_ip =  [for k, v in var.targets : v.ip if v.role == "master"][0]
-  }
-
   # depends_on = [ansible_playbook.setup_pve_slave]
   depends_on = [ansible_playbook.setup_pve_master]
   
