@@ -25,20 +25,9 @@
   debug:
     var: token_create.stdout
 
-- name: Parse token secret and id from JSON
-  set_fact:
-    token_json: "{{ token_create.stdout | from_json }}"
-    token_data: "{{ token_json['value'] }}"
-    token_id_full: "{{ token_json['full-tokenid'] }}"
-  when: token_create.stdout is defined and (token_create.stdout | length > 0) and ('value' in token_create.stdout)
-
 - name: Write token to file (JSON)
   copy:
-    content: |
-      {
-        "token_id": "{{ token_id_full }}",
-        "secret": "{{ token_data }}"
-      }
+    content: "{{ token_create.stdout | to_nice_json }}"
     dest: "{{ output_path }}"
     owner: root
     group: root
