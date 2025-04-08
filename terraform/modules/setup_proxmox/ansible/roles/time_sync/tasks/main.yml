@@ -1,4 +1,8 @@
 ---
+- name: Show passed variables
+  debug:
+    msg: "uplink_interface={{ uplink_interface }}, ovs_ip_address={{ ovs_ip_address }}, ovs_gateway={{ ovs_gateway }}"
+
 - name: Ensure systemd-timesyncd is installed
   apt:
     name: systemd-timesyncd
