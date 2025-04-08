@@ -7,8 +7,8 @@
 - name: Configure systemd-timesyncd with Japanese NTP
   lineinfile:
     path: /etc/systemd/timesyncd.conf
-    regexp: '^NTP='
-    line: "NTP={{ ntp_servers | join(' ') }}"
+    regexp: '^#?NTP='
+    line: "NTP={{ ntp_servers }}"
     state: present
     backup: yes
   notify: Restart timesyncd
