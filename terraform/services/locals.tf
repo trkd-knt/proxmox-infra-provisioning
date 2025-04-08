@@ -5,6 +5,7 @@ locals {
             segments = {
                 manage  = "192.168.1.0/24"
                 storage = "192.168.1.0/24"
+                ceph    = "192.168.1.0/24"
             }
             vlans = {
                 vlan10 = {

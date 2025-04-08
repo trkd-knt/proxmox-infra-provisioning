@@ -25,7 +25,7 @@ resource "ansible_playbook" "setup_all_host" {
   playbook                = "${path.module}/ansible/all_host.yml"
 
   name = each.value.ip
-  replayable = true
+  replayable = false
 
   extra_vars = {
     uplink_interface = each.value.eni.service
@@ -37,18 +37,25 @@ resource "ansible_playbook" "setup_all_host" {
   depends_on = [ansible_host.nodes]
 }
 
-# resource "ansible_playbook" "setup_pve_master" {
-#   for_each = { for k, v in var.hosts : k => v if v.role == "master" } 
-# 
-#   ansible_playbook_binary = "ansible-playbook"
-#   playbook                = "${path.module}/ansible/setup_pve_master.yml"
-# 
-#   name = each.value.ip
-#   replayable = false
-# 
-#   depends_on = [ansible_playbook.setup_all_host]
-# }
-# 
+resource "ansible_playbook" "setup_pve_master" {
+  for_each = { for k, v in var.hosts : k => v if v.role == "master" } 
+
+  ansible_playbook_binary = "ansible-playbook"
+  playbook                = "${path.module}/ansible/pve_master.yml"
+
+  name = each.value.ip
+  replayable = false
+
+  extra_vars = {
+    role = each.value.role
+    cluster_name = var.proxmox_cfg.cluster_name
+    ceph_devices =  join(" ", each.value.ceph_devices)
+    ceph_network = try(var.proxmox_cfg.networks.segments.ceph, "")
+  }
+
+  depends_on = [ansible_playbook.setup_all_host]
+}
+
 # resource "ansible_playbook" "setup_pve_slave" {
 #   for_each = { for k, v in var.hosts : k => v if v.role == "slave" } 
 # 
