@@ -41,5 +41,5 @@
 
 
 - name: Grant PVEAdmin role to token
-  command: "pvrum user modify {{ proxmox_user }} -group admin"
+  command: "pveum user modify {{ proxmox_user }} -group admin"
   
