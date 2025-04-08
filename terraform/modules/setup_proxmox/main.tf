@@ -41,7 +41,7 @@ resource "ansible_playbook" "setup_pve_master" {
   for_each = { for k, v in var.hosts : k => v if v.role == "master" } 
 
   ansible_playbook_binary = "ansible-playbook"
-  playbook                = "${path.module}/ansible/pve_master.yml"
+  playbook                = "${path.module}/ansible/pve_node_master.yml"
 
   name = each.value.ip
   replayable = false

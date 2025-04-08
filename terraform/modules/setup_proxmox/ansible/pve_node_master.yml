@@ -2,13 +2,11 @@
 - name: Setup Proxmox Master Node
   hosts: all
   become: true
-  vars:
-    role: "master"
-    cluster_name: "{{ cluster_name }}"
-    ceph_devices:
-      - /dev/sdb
-      - /dev/sdc
-    ceph_network: "10.0.0.0/24"
+  # vars:
+  #   role: "master"
+  #   cluster_name: "{{ cluster_name }}"
+  #   ceph_devices:
+  #   ceph_network: "10.0.0.0/24"
 
   roles:
     - cluster_setup
