@@ -1,9 +1,19 @@
 --- 
+- name: Check if user already exists
+  command: "pveum user list --output-format json"
+  register: existing_users
+  changed_when: false
+
+- name: Parse existing user list
+  set_fact:
+    user_exists: "{{ proxmox_user in (existing_users.stdout | from_json | map(attribute='userid') | list) }}"
+
 - name: Ensure user exists
   command: "pveum user add {{ proxmox_user }}"
+  when: not user_exists
   register: user_add_result
   failed_when: false
-  changed_when: false
+  changed_when: true
 
 - name: Create API token with JSON output
   shell: "pveum user token add {{ proxmox_user }} {{ token_id }} --output-format json"
