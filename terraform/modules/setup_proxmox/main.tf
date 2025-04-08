@@ -44,7 +44,7 @@ resource "ansible_playbook" "setup_pve_master" {
   playbook                = "${path.module}/ansible/pve_node_master.yml"
 
   name = each.value.ip
-  replayable = false
+  replayable = true
 
   extra_vars = {
     role = each.value.role
@@ -79,7 +79,7 @@ resource "ansible_playbook" "setup_pve_cluster" {
   playbook                = "${path.module}/ansible/pve_cluster.yml"
 
   name = each.value.ip
-  replayable = true
+  replayable = false
 
   extra_vars = {
     proxmox_user = var.proxmox_cfg.user.name

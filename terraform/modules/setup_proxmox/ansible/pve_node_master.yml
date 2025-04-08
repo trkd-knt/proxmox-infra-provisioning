@@ -2,6 +2,7 @@
 - name: Setup Proxmox Master Node
   hosts: all
   become: true
+  # define in terraform variables
   # vars:
   #   role: "master"
   #   cluster_name: "{{ cluster_name }}"

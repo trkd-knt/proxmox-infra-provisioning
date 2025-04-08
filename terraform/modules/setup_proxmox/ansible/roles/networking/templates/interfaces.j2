@@ -19,3 +19,6 @@ iface ovsbr0 inet manual
     ovs_ports {{ uplink_interface }}
     address {{ ovs_ip_address }}
     gateway {{ ovs_gateway }}
+
+# include
+source /etc/network/interfaces.d/*

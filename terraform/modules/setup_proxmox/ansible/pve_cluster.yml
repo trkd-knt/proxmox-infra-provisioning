@@ -2,12 +2,11 @@
 - name: Setup Proxmox Cluster
   hosts: all
   become: true
-  vars:
-    proxmox_user: "{{ proxmox_user }}"
-    token_id: "{{ token_id }}"
-    output_path: "{{ output_path }}"
+  # define in terraform variables
+  # vars:
+  #   proxmox_user: "{{ proxmox_user }}"
+  #   token_id: "{{ token_id }}"
+  #   output_path: "{{ output_path }}"
 
   roles:
     - create_user_token
-
-  

@@ -3,14 +3,14 @@
   hosts: all
   become: true
   vars:
-    role: "master"
-    master_ip: "{{ master_ip }}"
-    ceph_devices:
-      - /dev/sdb
-      - /dev/sdc
-    ceph_network: "10.0.0.0/24"
+  # define in terraform variables
+  # vars:
+  #   role: "slave"
+  #   cluster_name: "{{ cluster_name }}"
+  #   ceph_devices:
+  #   ceph_network: "10.0.0.0/24"
 
   roles:
     - cluster_setup
-    - storage_setup
+    # - storage_setup
   

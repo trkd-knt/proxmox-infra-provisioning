@@ -2,6 +2,7 @@
 - name: Proxmox Host Setup
   hosts: all
   become: true
+  # define in terraform variables
   # vars:
   #   uplink_interface: {{ uplink_interface }}
   #   ovs_ip_address: {{ ovs_ip_address }}

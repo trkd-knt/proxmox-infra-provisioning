@@ -17,15 +17,18 @@
 
 - name: Create API token with JSON output
   shell: "pveum user token add {{ proxmox_user }} {{ token_id }} --output-format json"
+  when: not user_exists
   register: token_create
   changed_when: "'value' in token_create.stdout"
   failed_when: false
 
 - name: Debug token output
+  when: not user_exists
   debug:
     var: token_create.stdout
 
 - name: Write token to file (JSON)
+  when: not user_exists
   copy:
     content: "{{ token_create.stdout | to_nice_json }}"
     dest: "{{ output_path }}"
@@ -34,11 +37,14 @@
     mode: '0600'
 
 - name: Grant PVEAdmin role to token
+  when: not user_exists
   command: "pveum group add admin -comment 'Admin group'"
 
 - name: Grant PVEAdmin role to token
+  when: not user_exists
   command: "pveum acl modify / -group admin -role PVEAdmin"
 
 - name: Grant PVEAdmin role to token
+  when: not user_exists
   command: "pveum user modify {{ proxmox_user }} -group admin"
   
