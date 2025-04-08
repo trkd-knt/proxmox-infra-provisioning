@@ -1,6 +1,6 @@
 locals {
     proxmox = {
-        cluster_name = "pve_cluster"
+        cluster_name = "pve-cluster"
         networks = {
             segments = {
                 manage  = "192.168.1.0/24"
