@@ -24,7 +24,7 @@ resource "ansible_playbook" "setup_all_host" {
   playbook                = "${path.module}/ansible/all_host.yml"
 
   name = each.value.ip
-  replayable = false
+  replayable = true
 
   extra_vars = {
     uplink_interface = each.value.eni.service
