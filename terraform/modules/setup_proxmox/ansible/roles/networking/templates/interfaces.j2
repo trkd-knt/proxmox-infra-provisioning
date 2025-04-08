@@ -16,8 +16,8 @@ auto ovsbr0
 iface ovsbr0 inet manual
     ovs_type OVSBridge
     ovs_ports {{ uplink_interface }}
-    address {{ ovs_ip_address }}
-    gateway {{ ovs_gateway }}
+    address {{ mgmt_address }}
+    gateway {{ mgmt_gateway }}
 # OVS base bridge
 
 auto vlan10
