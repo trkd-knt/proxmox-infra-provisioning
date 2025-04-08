@@ -8,7 +8,7 @@ terraform {
 }
 
 locals {
-  proxmox_token_data = jsondecode(file("${path.module}/../outputs/proxmox_cluster_token.json"))
+  proxmox_token_data = jsondecode(file("${path.module}/../../outputs/proxmox_cluster_token.json"))
 }
 provider "proxmox" {
   pm_api_token_id     = local.proxmox_token_data["full-tokenid"]
