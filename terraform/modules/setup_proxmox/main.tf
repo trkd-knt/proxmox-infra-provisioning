@@ -31,7 +31,7 @@ resource "ansible_playbook" "setup_all_host" {
     uplink_interface = each.value.eni.service
     ovs_ip_address = each.value.manageip
     ovs_gateway =  each.value.gatewayip
-    ntp_servers = each.value.ntp_servers
+    ntp_servers = jsonencode(each.value.ntp_servers)
   }
 
   depends_on = [ansible_host.nodes]
