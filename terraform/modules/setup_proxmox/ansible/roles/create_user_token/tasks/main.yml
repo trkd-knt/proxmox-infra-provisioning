@@ -35,5 +35,5 @@
 
 
 - name: Grant PVEAdmin role to token
-  command: "pveum aclmod / -tokenid {{ proxmox_user }}!{{ token_id }} -role PVEAdmin"
+  command: "pveum aclmod / --user {{ proxmox_user }}!{{ token_id }} --roles PVEAdmin"
   
