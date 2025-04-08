@@ -28,9 +28,7 @@ resource "ansible_playbook" "setup_all_host" {
   replayable = false
 
   extra_vars = {
-    uplink_interface = each.value.eni.service
-    ovs_ip_address = each.value.manageip
-    ovs_gateway =  each.value.gatewayip
+    network = each.value.network
     ntp_servers = join(" ", each.value.ntp_servers)
   }
 

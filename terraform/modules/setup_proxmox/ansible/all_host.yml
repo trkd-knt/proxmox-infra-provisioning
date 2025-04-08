@@ -4,9 +4,20 @@
   become: true
   # define in terraform variables
   # vars:
-  #   uplink_interface: {{ uplink_interface }}
-  #   ovs_ip_address: {{ ovs_ip_address }}
-  #   ovs_gateway: {{ ovs_gateway }}
+  #   network:
+  #     uplink_interface:
+  #     mgmt:
+  #       address:
+  #       gateway:
+  #     vlan10:
+  #       address:
+  #       gateway:
+  #     vlan20:
+  #       address:
+  #       gateway:
+  #     vlan30:
+  #       address:
+  #       gateway:
   #   ntp_servers:
   #     - ntp.nict.jp
   #     - ntp.jst.mfeed.ad.jp

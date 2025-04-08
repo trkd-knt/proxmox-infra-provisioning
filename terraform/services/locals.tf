@@ -38,8 +38,25 @@ locals {
     hosts = {
         pve01 = {
             ip = "192.168.1.13"
-            manageip = "192.168.1.14/24"
-            gatewayip = "192.168.1.1"
+            network = {
+              uplink_interface = "eth0"
+              mgmt = {
+                address = "192.168.1.14"
+                gateway = "192.168.1.1"
+              }
+              vlan10 = {
+                address = "192.168.10.0/24"
+                gateway = "192.168.10.100"
+              }
+              vlan20 = {
+                address = "192.168.20.0/24"
+                gateway = "192.168.20.100"
+              }
+              vlan30 = {
+                address = "192.168.30.0/24"
+                gateway = "192.168.30.100"
+              }
+            }
 
             role = "master"
             eni = {

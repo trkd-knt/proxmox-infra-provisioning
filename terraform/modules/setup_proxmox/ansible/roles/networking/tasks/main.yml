@@ -3,17 +3,10 @@
   debug:
     msg: "uplink_interface={{ uplink_interface }}, ovs_ip_address={{ ovs_ip_address }}, ovs_gateway={{ ovs_gateway }}"
 
-- name: ベースネットワーク設定（/etc/network/interfaces）
+- name: Configure network interfaces
   template:
     src: templates/interfaces.j2
     dest: /etc/network/interfaces
     mode: '0644'
     backup: yes
-  notify: restart networking
-
-- name: VLAN設定ファイルを配置（/etc/network/interfaces.d）
-  template:
-    src: templates/ovs_vlans.j2
-    dest: /etc/network/interfaces.d/ovs_vlans
-    mode: '0644'
   notify: restart networking
