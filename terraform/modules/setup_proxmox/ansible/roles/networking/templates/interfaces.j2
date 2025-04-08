@@ -10,7 +10,7 @@ iface lo inet loopback
 auto {{ uplink_interface }}
 iface {{ uplink_interface }} inet manual
     ovs_type OVSPort
-    ovs_bridge {{ ovs_bridge_name }}
+    ovs_bridge ovsbr0
 
 # OVSのベースブリッジ（物理インターフェース用）
 auto ovsbr0
