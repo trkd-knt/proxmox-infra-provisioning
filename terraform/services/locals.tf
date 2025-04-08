@@ -49,7 +49,7 @@ locals {
                 "0.pool.ntp.org",
                 "1.pool.ntp.org",
             ]
-            ceph_storage_devices = [
+            ceph_devices = [
                 "/dev/sdb",
                 "/dev/sdc"
              ]
