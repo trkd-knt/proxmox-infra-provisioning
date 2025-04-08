@@ -23,7 +23,7 @@ resource "ansible_playbook" "setup_all_host" {
   ansible_playbook_binary = "ansible-playbook"
   playbook                = "${path.module}/ansible/all_host.yml"
 
-  name = each.value.ip
+  name = split("/", each.value.ip)[0]
   replayable = false
 
   extra_vars = {
