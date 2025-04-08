@@ -2,7 +2,7 @@ locals {
     proxmox = {
         cluster_name = "pve-cluster"
         user = {
-            name = "root@pam"
+            name = "terraform@pam"
             token_id = "terraform"
         }
         networks = {
