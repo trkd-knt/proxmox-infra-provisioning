@@ -1,7 +1,7 @@
 ---
 - name: ベースネットワーク設定（/etc/network/interfaces）
   copy:
-    src: ovs_base.j2
+    src: templates/interfaces.j2
     dest: /etc/network/interfaces
     mode: '0644'
     backup: yes
@@ -9,7 +9,7 @@
 
 - name: VLAN設定ファイルを配置（/etc/network/interfaces.d）
   template:
-    src: ovs_vlans.j2
-    dest: "/etc/network/interfaces.d/ovs_vlans"
+    src: templates/ovs_vlans.j2
+    dest: /etc/network/interfaces.d/ovs_vlans
     mode: '0644'
   notify: restart networking
