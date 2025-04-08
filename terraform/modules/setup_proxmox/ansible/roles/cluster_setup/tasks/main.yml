@@ -14,7 +14,7 @@
 
 - name: 他ノードをクラスタに参加
   command: "pvecm add {{ master_ip }} -force"
-  when: role != master and "'Cluster information' not in cluster_status.stdout"
+  when: role != "master" and "'Cluster information' not in cluster_status.stdout"
   register: join_result
   failed_when: false
   changed_when: join_result.rc == 0
