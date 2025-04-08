@@ -14,6 +14,7 @@ resource "ansible_host" "nodes" {
     # proxmox_user = "root@pam"
     # token_id     = "terraform"
     # output_path  = "/tmp/pve_token_${each.value.ip}.json"
+    ansible_config = "${path.module}/..//ansible.cfg"
   }
 }
 
