@@ -39,7 +39,6 @@
 - name: Grant PVEAdmin role to token
   command: "pveum acl modify / -group admin -role PVEAdmin"
 
-
 - name: Grant PVEAdmin role to token
   command: "pveum user modify {{ proxmox_user }} -group admin"
   
