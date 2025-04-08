@@ -36,7 +36,8 @@ locals {
 
     hosts = {
         pve01 = {
-            ip = "192.168.1.14/24"
+            ip = "192.168.1.13"
+            manageip = "192.168.1.14/24"
             gatewayip = "192.168.1.1"
 
             role = "master"

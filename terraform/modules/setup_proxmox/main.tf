@@ -23,12 +23,12 @@ resource "ansible_playbook" "setup_all_host" {
   ansible_playbook_binary = "ansible-playbook"
   playbook                = "${path.module}/ansible/all_host.yml"
 
-  name = split("/", each.value.ip)[0]
+  name = each.value.ip
   replayable = false
 
   extra_vars = {
     uplink_interface = each.value.eni.service
-    ovs_ip_address = each.value.ip
+    ovs_ip_address = each.value.manageip
     ovs_gateway =  each.value.gatewayip
     # ntp_servers = each.value.ntp_servers
   }
