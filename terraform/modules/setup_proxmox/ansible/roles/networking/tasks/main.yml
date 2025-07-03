@@ -1,8 +1,4 @@
 ---
-- name: Show passed variables
-  debug:
-    msg: "uplink_interface={{ uplink_interface }}, ovs_ip_address={{ ovs_ip_address }}, ovs_gateway={{ ovs_gateway }}"
-
 - name: Configure network interfaces
   template:
     src: templates/interfaces.j2

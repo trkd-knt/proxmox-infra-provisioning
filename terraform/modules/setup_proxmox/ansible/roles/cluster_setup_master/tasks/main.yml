@@ -1,0 +1,47 @@
+---
+- name: Check if node already in cluster
+  command: pvecm status
+  register: cluster_status
+  changed_when: false
+  failed_when: false
+
+- name: クラスタ初期化（マスター）
+  command: "pvecm create {{ cluster_name }}"
+  when: cluster_status.rc != 0
+  register: cluster_create
+  failed_when: false
+  changed_when: cluster_create.rc == 0
+
+- name: Ensure .ssh directory exists
+  when: cluster_create is changed
+  file:
+    path: "/root/.ssh"
+    state: directory
+    mode: '0700'
+
+- name: Generate SSH keypair
+  when: cluster_create is changed
+  register: ssh_keygen
+  command: "ssh-keygen -t rsa -b 4096 -N '' -f ~/.ssh/pmx_id_rsa"
+
+- name: Read public key content
+  when: ssh_keygen is changed
+  slurp:
+    src: ~/.ssh/pmx_id_rsa.pub
+  register: pubkey_raw
+
+- name: Add public key to authorized_keys
+  when: ssh_keygen is changed
+  authorized_key:
+    user: root
+    key: "{{ pubkey_raw['content'] | b64decode }}"
+    state: present
+    exclusive: false
+
+- name: Fetch private key to control node
+  when: cluster_create is changed
+  fetch:
+    src: ~/.ssh/pmx_id_rsa
+    dest: pmx_id_rsa
+    flat: yes
+    mode: '0600'

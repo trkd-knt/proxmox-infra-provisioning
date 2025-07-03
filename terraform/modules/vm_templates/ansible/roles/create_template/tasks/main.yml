@@ -1,0 +1,69 @@
+---
+- name: Ensure image is downloaded
+  get_url:
+    url: "{{ vm_image_url }}"
+    dest: "/tmp/{{ vm_image_name }}"
+    mode: '0644'
+    force: no
+
+- name: Create VM
+  shell: |
+    qm create {{ vm_id }} --name {{ vm_name }} --memory {{ vm_memory }} --net0 virtio,bridge={{ vm_bridge }}
+  args:
+    creates: "/etc/pve/qemu-server/{{ vm_id }}.conf"
+
+- name: Import disk image
+  shell: |
+    qm importdisk {{ vm_id }} /tmp/{{ vm_image_name }} {{ vm_storage }} --format qcow2
+  args:
+    creates: "/var/lib/vz/images/{{ vm_id }}/vm-{{ vm_id }}-disk-0.qcow2"
+
+- name: Get actual imported disk volume ID
+  command: "pvesm list {{ vm_storage }}"
+  register: volume_list
+
+- name: Extract matching volume lines (debug)
+  set_fact:
+    matched_volumes: >-
+      {{ volume_list.stdout_lines[1:]
+         | select("search", vm_storage ~ ':.*vm-' ~ vm_id ~ '-disk-0')
+         | list }}
+
+- name: Fail if no volume found
+  fail:
+    msg: |
+      No imported volume found for VM ID {{ vm_id }} in storage {{ vm_storage }}.
+      Expected pattern: {{ vm_storage }}:.*vm-{{ vm_id }}-disk-0
+      Available volumes:
+      {{ volume_list.stdout }}
+  when: matched_volumes | length == 0
+
+- name: Extract imported volume name
+  set_fact:
+    imported_volume: "{{ matched_volumes[0].split()[0] }}"
+
+- name: Attach imported disk
+  shell: |
+    qm set {{ vm_id }} --scsihw virtio-scsi-pci --scsi0 {{ imported_volume }}
+
+- name: Set cloud-init options
+  shell: |
+    qm set {{ vm_id }} --ide2 {{ vm_storage }}:cloudinit --boot c --bootdisk scsi0 --serial0 socket --vga serial0
+  ignore_errors: true
+
+- name: Resize disk
+  shell: |
+    qm resize {{ vm_id }} scsi0 {{ vm_disk_resize }}
+
+- name: Set DHCP networking
+  shell: |
+    qm set {{ vm_id }} --ipconfig0 ip=dhcp
+
+- name: Mark as template
+  shell: |
+    qm template {{ vm_id }}
+
+- name: Remove cloud image file
+  file:
+    path: "/tmp/{{ vm_image_name }}"
+    state: absent

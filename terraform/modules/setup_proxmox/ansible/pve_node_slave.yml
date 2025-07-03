@@ -2,15 +2,15 @@
 - name: Setup Proxmox Slave Node
   hosts: all
   become: true
-  vars:
   # define in terraform variables
   # vars:
-  #   role: "slave"
+  #   role: "master"
   #   cluster_name: "{{ cluster_name }}"
   #   ceph_devices:
   #   ceph_network: "10.0.0.0/24"
 
   roles:
-    - cluster_setup
+    - cluster_setup_slave
+    - proxmox-storage-config
     # - storage_setup
   

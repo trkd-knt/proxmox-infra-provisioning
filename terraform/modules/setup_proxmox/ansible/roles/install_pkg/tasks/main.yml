@@ -4,6 +4,8 @@
     update_cache: yes
     cache_valid_time: 3600
 
+# apt install net-tools
+
 - name: Install Ceph packages (Proxmox)
   apt:
     name: "{{ item }}"

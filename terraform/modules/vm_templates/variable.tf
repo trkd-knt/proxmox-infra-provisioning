@@ -8,12 +8,7 @@ variable "ansible_cfg" {
   type        = any
 }
 
-variable "proxmox_cfg" {
-  description = "Proxmox cluster configuration"
+variable "vm_templates" {
+  description = "List of VM templates to create"
   type        = any
-}
-
-variable "output_path" {
-  description = "Path to output the token"
-  type        = string
 }

@@ -1,0 +1,5 @@
+---
+- name: cleanup token tmp file
+  file:
+    path: /tmp/proxmox_token.json
+    state: absent

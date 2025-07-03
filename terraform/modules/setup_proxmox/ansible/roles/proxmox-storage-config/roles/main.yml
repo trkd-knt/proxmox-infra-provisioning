@@ -1,0 +1,37 @@
+---
+## 動作未検証
+- name: Read storage.cfg
+  slurp:
+    src: /etc/pve/storage.cfg
+  register: storage_cfg_raw
+
+- name: Decode config
+  set_fact:
+    storage_cfg_content: "{{ storage_cfg_raw.content | b64decode }}"
+
+- name: Extract current dir local content block
+  set_fact:
+    local_block: >-
+      {{ storage_cfg_content
+          | regex_search('(?s)(dir: local\\n(?:\\t.*\\n)*?)\\n', '\\1', multiline=True)
+      }}
+
+- name: Extract content line from dir local
+  set_fact:
+    local_content_line: >-
+      {{ local_block
+          | regex_search('^\\tcontent .*$', '\\0', multiline=True)
+      }}
+
+- name: Update content line if needed
+  set_fact:
+    new_local_content_line: >-
+      {{ local_content_line + ',images'
+          if 'images' not in local_content_line else local_content_line
+      }}
+
+- name: Update config if 'images' not in content
+  copy:
+    dest: /etc/pve/storage.cfg
+    content: "{{ storage_cfg_content | regex_replace(local_content_line, new_local_content_line) }}"
+  when: "'images' not in local_content_line"

@@ -21,7 +21,9 @@
   #   ntp_servers:
   #     - ntp.nict.jp
   #     - ntp.jst.mfeed.ad.jp
+  #   custom_hosts
   roles:
+    - hosts_entries
     - install_pkg
     - networking
     - time_sync

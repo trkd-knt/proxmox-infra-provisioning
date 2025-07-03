@@ -1,0 +1,8 @@
+---
+- name: Create Template on Proxmox
+  hosts: all
+  become: yes
+  #vars_files:
+  #  - vars.yml
+  roles:
+    - create_template

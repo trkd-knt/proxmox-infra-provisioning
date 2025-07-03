@@ -23,7 +23,7 @@ iface ovsbr0 inet manual
 auto vlan10
 iface vlan10 inet manual
     address {{ vlan10_address }}
-    gateway {{ vlan10_gateway }}
+    # gateway {{ vlan10_gateway }}
     ovs_type OVSIntPort
     ovs_bridge ovsbr0
     ovs_options tag=10
@@ -38,7 +38,7 @@ iface vmbr10 inet manual
 auto vlan20
 iface vlan20 inet manual
     address {{ vlan20_address }}
-    gateway {{ vlan20_gateway }}
+    # gateway {{ vlan20_gateway }}
     ovs_type OVSIntPort
     ovs_bridge ovsbr0
     ovs_options tag=20
@@ -53,7 +53,7 @@ iface vmbr20 inet manual
 auto vlan30
 iface vlan30 inet manual
     address {{ vlan30_address }}
-    gateway {{ vlan30_gateway }}
+    # gateway {{ vlan30_gateway }}
     ovs_type OVSIntPort
     ovs_bridge ovsbr0
     ovs_options tag=30

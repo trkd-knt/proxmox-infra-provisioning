@@ -1,0 +1,42 @@
+---
+- name: Check if node already in cluster
+  command: pvecm status
+  register: cluster_status
+  changed_when: false
+  failed_when: false
+
+- name: Check if private key already exists
+  stat:
+    path: /root/.ssh/pmx_id_rsa
+  register: private_key_stat
+
+- name: Upload private key to shared directory
+  when: not private_key_stat.stat.exists
+  copy:
+    src: /tmp/pmx_id_rsa
+    dest: /root/.ssh/pmx_id_rsa
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Add SSH config entry for this host
+  when: cluster_status.rc != 0
+  blockinfile:
+    path: /root/.ssh/config
+    create: yes
+    owner: root
+    group: root
+    mode: '0644'
+    block: |
+      Host master {{ master_ip }}
+        HostName {{ master_ip }}
+        IdentityFile ~/.ssh/pmx_id_rsa
+        User root
+        Port {{ master_ssh_port }}
+
+- name: 他ノードをクラスタに参加
+  command: "pvecm add {{ master_ip }} -force --use_ssh"
+  when: cluster_status.rc != 0
+  register: join_result
+  failed_when: false
+  changed_when: join_result.rc == 0

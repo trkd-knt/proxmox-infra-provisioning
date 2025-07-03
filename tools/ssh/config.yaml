@@ -1,0 +1,28 @@
+
+
+pve1:
+  ip: 126.66.1.111
+  port: 10122
+  rsa_key: ~/.ssh/medops_trkd_rsa
+  local_port: 8006
+  remote_host: localhost
+  remote_port: 8006
+  user: terakado
+
+pvegpu1:
+  ip: 126.66.1.111
+  port: 10022
+  rsa_key: ~/.ssh/medops_trkd_rsa
+  local_port: 8007
+  remote_host: localhost
+  remote_port: 8006
+  user: terakado
+
+# pvegpu1:
+#   ip: 126.66.1.111
+#   port: 10222
+#   rsa_key: ~/.ssh/medops_trkd_rsa
+#   local_port: 8006
+#   remote_host: localhost
+#   remote_port: 8006
+#   user: terakado

@@ -10,6 +10,7 @@
   #   ceph_network: "10.0.0.0/24"
 
   roles:
-    - cluster_setup
+    - cluster_setup_master
+    - proxmox-storage-config
     # - storage_setup
   

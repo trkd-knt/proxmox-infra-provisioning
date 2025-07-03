@@ -1,0 +1,8 @@
+---
+  - name: Add custom entries to /etc/hosts
+    ansible.builtin.blockinfile:
+      path: /etc/hosts
+      block: "{{ custom_hosts }}"
+      marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      backup: yes
+    when: custom_hosts | length > 0

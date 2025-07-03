@@ -27,24 +27,33 @@
   debug:
     var: token_create.stdout
 
-- name: Write token to file (JSON)
+- name: Write token to remote tmp
   when: not user_exists
   copy:
-    content: "{{ token_create.stdout | to_nice_json }}"
-    dest: "{{ output_path }}"
-    owner: root
-    group: root
+    content: "{{ token_create.stdout }}"
+    dest: "/tmp/proxmox_token.json"
     mode: '0600'
 
-- name: Grant PVEAdmin role to token
-  when: not user_exists
-  command: "pveum group add admin -comment 'Admin group'"
+# - name: Grant Administrator role to token
+#   when: not user_exists
+#   command: "pveum acl modify / -token '{{ proxmox_user }}!{{ token_id }}' -role Administrator"
 
-- name: Grant PVEAdmin role to token
+- name: Grant Administrator role to token
   when: not user_exists
-  command: "pveum acl modify / -group admin -role PVEAdmin"
+  command: "pveum group add iac -comment 'Admin group'"
 
-- name: Grant PVEAdmin role to token
+- name: Grant Administrator role to token
   when: not user_exists
-  command: "pveum user modify {{ proxmox_user }} -group admin"
-  
+  command: "pveum acl modify / -group iac -role Administrator"
+
+- name: Grant Administrator role to token
+  when: not user_exists
+  command: "pveum user modify {{ proxmox_user }} -group iac"
+
+- name: Fetch token to control machine
+  when: not user_exists
+  fetch:
+    src: "/tmp/proxmox_token.json"
+    dest: "{{ output_path }}"
+    flat: yes
+  notify: cleanup token tmp file
